@@ -88,11 +88,11 @@ function ItemForm({ selectedItem, onClose, refresh }) {
 
     setLoading(true);
 
-    let baseUrl = "https://backend-xg71.onrender.com/inventory/";
+    let baseUrl = "http://127.0.0.1:8000/inventory/";
     let method = "POST";
 
     if (selectedItem) {
-      baseUrl = `https://backend-xg71.onrender.com/inventory/${selectedItem.id}`;
+      baseUrl = `http://127.0.0.1:8000/inventory/${selectedItem.id}`;
       method = "PUT";
     }
 

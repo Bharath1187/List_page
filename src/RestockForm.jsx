@@ -58,7 +58,7 @@ function RestockForm({ item, onClose, refresh }) {
     }
 
     try {
-      const res = await fetch(`https://backend-xg71.onrender.com/inventory/${item.id}/restock?${params.toString()}`, {
+      const res = await fetch(`http://localhost:8000/inventory/${item.id}/restock?${params.toString()}`, {
         method: "POST"
       });
 

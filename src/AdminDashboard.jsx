@@ -23,6 +23,8 @@ function AdminDashboard() {
   const [showHistory, setShowHistory] = useState(false);
   const [showRestock, setShowRestock] = useState(false);
   const [showStockOut, setShowStockOut] = useState(false);
+  const [showSummaryReport, setShowSummaryReport] = useState(false);
+  
   const [selectedItem, setSelectedItem] = useState(null);
 
   const categories = ["All", ...new Set(items.map((item) => item.category))];
@@ -30,15 +32,15 @@ function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const itemsRes = await fetch(`https://backend-xg71.onrender.com/inventory/?search=${search}`);
+      const itemsRes = await fetch(`http://127.0.0.1:8000/inventory/?search=${search}`);
       const itemsData = await itemsRes.json();
       setItems(itemsData);
 
-      const summaryRes = await fetch("https://backend-xg71.onrender.com/inventory/summary");
+      const summaryRes = await fetch("http://127.0.0.1:8000/inventory/summary");
       const summaryData = await summaryRes.json();
       setSummary(summaryData);
 
-      const lowStockRes = await fetch("https://backend-xg71.onrender.com/inventory/low-stock");
+      const lowStockRes = await fetch("http://127.0.0.1:8000/inventory/low-stock");
       const lowStockData = await lowStockRes.json();
       setLowStockItems(lowStockData);
     } catch (error) {
@@ -55,7 +57,7 @@ function AdminDashboard() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to permanently delete this item?")) {
       try {
-        const res = await fetch(`https://backend-xg71.onrender.com/inventory/${id}`, { method: "DELETE" });
+        const res = await fetch(`http://127.0.0.1:8000/inventory/${id}`, { method: "DELETE" });
         if (res.ok) {
           fetchData();
         }
@@ -77,6 +79,8 @@ function AdminDashboard() {
     activeCategory === "All" ? true : item.category === activeCategory
   );
 
+  
+
   return (
     <div className="admin-dashboard">
       {/* Top Navigation Bar */}
@@ -86,6 +90,7 @@ function AdminDashboard() {
           <Link to="/inventory" className="nav-link">Inventory List</Link>
         </div>
         <div className="nav-right">
+             <Link to="/summary-report" className="nav-link">Summary Report</Link>
           <NotificationPanel lowStockItems={lowStockItems} />
         </div>
       </div>
@@ -107,7 +112,7 @@ function AdminDashboard() {
           </div>
           <div className="stat-card">
             <h3>Total Value</h3>
-            <p>${summary.total_inventory_value.toLocaleString()}</p>
+            <p>RM {summary.total_inventory_value.toLocaleString()}</p>
           </div>
         </div>
 
@@ -158,8 +163,8 @@ function AdminDashboard() {
                   <p className="description">{item.description}</p>
                   <p className="category">{item.category}</p>
                   <div className="price-info">
-                    <span className="price">${item.price.toFixed(2)}</span>
-                    <span className="unit-cost">Cost: ${item.unit_cost.toFixed(2)}</span>
+                    <span className="price">RM {item.price.toFixed(2)}</span>
+                    <span className="unit-cost">Cost: RM {item.unit_cost.toFixed(2)}</span>
                   </div>
                   <div className="stock-info">
                     <span className="quantity">Stock: {item.quantity}</span>
@@ -167,7 +172,7 @@ function AdminDashboard() {
                   </div>
                   <div className="value-info">
                     <span className="total-value">
-                      Value: ${(item.price * item.quantity).toFixed(2)}
+                      Value: RM {(item.price * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -251,6 +256,98 @@ function AdminDashboard() {
           onClose={() => setShowStockOut(false)}
           refresh={fetchData}
         />
+      )}
+
+      {/* Summary Report Modal */}
+      {showSummaryReport && (
+        <div className="item-form-overlay" >
+          <div className="item-form-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="item-form-header">
+              <h3>Inventory Summary Report</h3>
+              <button
+                className="close-btn"
+                onClick={() => setShowSummaryReport(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="summary-report">
+              <div className="report-section">
+                <h4>Overall Statistics</h4>
+                <div className="report-grid">
+                  <div className="report-item">
+                    <span className="report-label">Total Active Items:</span>
+                    <span className="report-value">{summary.total_active_items}</span>
+                  </div>
+                  <div className="report-item">
+                    <span className="report-label">Low Stock Items:</span>
+                    <span className="report-value" style={{ color: summary.low_stock_count > 0 ? "#da1a31" : "#27ae60" }}>
+                      {summary.low_stock_count}
+                    </span>
+                  </div>
+                  <div className="report-item">
+                    <span className="report-label">Total Inventory Value:</span>
+                    <span className="report-value">${summary.total_inventory_value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="report-section">
+                <h4>Low Stock Items ({lowStockItems.length})</h4>
+                {lowStockItems.length > 0 ? (
+                  <div className="report-table">
+                    <div className="report-table-header">
+                      <div className="col-name">Item Name</div>
+                      <div className="col-qty">Current Stock</div>
+                      <div className="col-value">Value</div>
+                    </div>
+                    {lowStockItems.map((item) => (
+                      <div key={item.id} className="report-table-row">
+                        <div className="col-name">{item.name}</div>
+                        <div className="col-qty">{item.quantity}</div>
+                        <div className="col-value">${(item.price * item.quantity).toFixed(2)}</div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ textAlign: "center", color: "#27ae60", fontWeight: "600" }}>✓ All items are well stocked!</p>
+                )}
+              </div>
+
+              <div className="report-section">
+                <h4>Category Breakdown</h4>
+                <div className="report-categories">
+                  {categories.slice(1).map((category) => {
+                    const categoryItems = items.filter(item => item.category === category);
+                    const categoryValue = categoryItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    return (
+                      <div key={category} className="category-stat">
+                        <span className="category-name">{category}</span>
+                        <span className="category-count">{categoryItems.length} items</span>
+                        <span className="category-value">${categoryValue.toFixed(2)}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="item-form-actions">
+                <button
+                  className="primary-btn"
+                  onClick={() => window.print()}
+                >
+                  Print Report
+                </button>
+                <button
+                  className="secondary-btn"
+                  
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

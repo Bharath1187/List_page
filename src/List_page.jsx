@@ -29,11 +29,11 @@ function List_page() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const itemsRes = await fetch(`https://backend-xg71.onrender.com/inventory/?search=${search}`);
+      const itemsRes = await fetch(`http://127.0.0.1:8000/inventory/?search=${search}`);
       const itemsData = await itemsRes.json();
       setItems(itemsData);
 
-      const summaryRes = await fetch("https://backend-xg71.onrender.com/inventory/summary");
+      const summaryRes = await fetch("http://127.0.0.1:8000/inventory/summary");
       const summaryData = await summaryRes.json();
       setSummary(summaryData);
     } catch (error) {
@@ -50,7 +50,7 @@ function List_page() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to permanently delete this item?")) {
       try {
-        const res = await fetch(`https://backend-xg71.onrender.com/inventory/${id}`, { method: "DELETE" });
+        const res = await fetch(`http://127.0.0.1:8000/inventory/${id}`, { method: "DELETE" });
         if (res.ok) {
           fetchData();
         }
@@ -89,7 +89,7 @@ function List_page() {
         </div>
         <div className="stat-card">
           <h3>Total Value</h3>
-          <p>${summary.total_inventory_value.toLocaleString()}</p>
+          <p>RM {summary.total_inventory_value.toLocaleString()}</p>
         </div>
       </div>
 
@@ -144,9 +144,9 @@ function List_page() {
                 <td>{item.name}</td>
                 <td>{item.category}</td>
                 <td>{item.quantity}</td>
-                <td>${item.price?.toLocaleString()}</td>
-                <td>${item.unit_cost?.toLocaleString()}</td>
-                <td>${(item.quantity * (item.unit_cost || 0)).toLocaleString()}</td>
+                <td>RM {item.price?.toLocaleString()}</td>
+                <td>RM {item.unit_cost?.toLocaleString()}</td>
+                <td>RM {(item.quantity * (item.unit_cost || 0)).toLocaleString()}</td>
                 <td>
                   <span
                     className={
