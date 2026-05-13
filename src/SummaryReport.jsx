@@ -21,12 +21,12 @@ function SummaryReport() {
     setLoading(true);
     try {
       // Fetch summary
-      const summaryRes = await fetch("http://127.0.0.1:8000/inventory/summary");
+      const summaryRes = await fetch("https://backend-xg71.onrender.com/inventory/summary");
       const summaryData = await summaryRes.json();
       setSummary(summaryData);
 
       // Fetch all items
-      const itemsRes = await fetch("http://127.0.0.1:8000/inventory/");
+      const itemsRes = await fetch("https://backend-xg71.onrender.com/inventory/");
       const itemsData = await itemsRes.json();
       setItems(itemsData);
 

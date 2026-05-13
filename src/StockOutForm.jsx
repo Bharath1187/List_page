@@ -45,7 +45,7 @@ function StockOutForm({ item, onClose, refresh }) {
     }
 
     try {
-      const res = await fetch(`http://127.0.0.1:8000/inventory/${item.id}/use?${params.toString()}`, {
+      const res = await fetch(`https://backend-xg71.onrender.com/inventory/${item.id}/use?${params.toString()}`, {
         method: "POST"
       });
 

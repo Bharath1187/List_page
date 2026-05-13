@@ -32,15 +32,15 @@ function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const itemsRes = await fetch(`http://127.0.0.1:8000/inventory/?search=${search}`);
+      const itemsRes = await fetch(`https://backend-xg71.onrender.com/inventory/?search=${search}`);
       const itemsData = await itemsRes.json();
       setItems(itemsData);
 
-      const summaryRes = await fetch("http://127.0.0.1:8000/inventory/summary");
+      const summaryRes = await fetch("https://backend-xg71.onrender.com/inventory/summary");
       const summaryData = await summaryRes.json();
       setSummary(summaryData);
 
-      const lowStockRes = await fetch("http://127.0.0.1:8000/inventory/low-stock");
+      const lowStockRes = await fetch("https://backend-xg71.onrender.com/inventory/low-stock");
       const lowStockData = await lowStockRes.json();
       setLowStockItems(lowStockData);
     } catch (error) {
@@ -57,7 +57,7 @@ function AdminDashboard() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to permanently delete this item?")) {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/inventory/${id}`, { method: "DELETE" });
+        const res = await fetch(`https://backend-xg71.onrender.com/inventory/${id}`, { method: "DELETE" });
         if (res.ok) {
           fetchData();
         }
