@@ -61,8 +61,9 @@ function SummaryReport() {
     const printWindow = window.open("", "_blank");
     printWindow.document.write(`
       <div class="print-report">
-        <div class="print-header" style="text-align: center; padding-bottom: 20px;">
-          <img src="${logo}" alt="Rwash Logo" style="height: 180px; margin-bottom: 15px;">
+        <div class="print-header" style="text-align: center; padding-bottom: 20px;  margin-bottom: 30px;">
+          <img src="${logo}" alt="Rwash Logo" style="height: 180px; margin-bottom: 15px; ">
+          <p style={{width:"1060px", border:"2px solid #da1a31"}}></p>
         </div>
         ${reportRef.current.innerHTML}
       </div>
@@ -256,6 +257,7 @@ function SummaryReport() {
 
   return (
     <div className="inventory-container">
+      
       <div
         className="ListHeading"
         style={{
@@ -267,6 +269,7 @@ function SummaryReport() {
         }}
       >
         <img src={logo} alt="Rwash Logo" className="nav-logo" style={{ height: "180px" }} />
+        <div><p style={{width:"850px", border:"2px solid #da1a31"}}></p></div>
         
         <div style={{ 
           display: "flex", 

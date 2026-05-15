@@ -77,7 +77,7 @@ function List_page() {
         marginBottom: "30px" 
       }}>
         <img src={logo} alt="Rwash Logo" className="nav-logo" style={{ height: "180px" }} />
-        
+        <p style={{width:"1060px", border:"2px solid #da1a31"}}></p>
         <div style={{ 
           display: "flex", 
           justifyContent: "space-between", 
