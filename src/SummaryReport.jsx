@@ -21,12 +21,12 @@ function SummaryReport() {
     setLoading(true);
     try {
       // Fetch summary
-      const summaryRes = await fetch("https://backend-xg71.onrender.com/inventory/summary");
+      const summaryRes = await fetch("https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/summary");
       const summaryData = await summaryRes.json();
       setSummary(summaryData);
 
       // Fetch all items
-      const itemsRes = await fetch("https://backend-xg71.onrender.com/inventory/");
+      const itemsRes = await fetch("https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/");
       const itemsData = await itemsRes.json();
       setItems(itemsData);
 

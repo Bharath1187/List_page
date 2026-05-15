@@ -32,15 +32,15 @@ function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const itemsRes = await fetch(`https://backend-xg71.onrender.com/inventory/?search=${search}`);
+      const itemsRes = await fetch(`https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/?search=${search}`);
       const itemsData = await itemsRes.json();
       setItems(itemsData);
 
-      const summaryRes = await fetch("https://backend-xg71.onrender.com/inventory/summary");
+      const summaryRes = await fetch("https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/summary");
       const summaryData = await summaryRes.json();
       setSummary(summaryData);
 
-      const lowStockRes = await fetch("https://backend-xg71.onrender.com/inventory/low-stock");
+      const lowStockRes = await fetch("https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/low-stock");
       const lowStockData = await lowStockRes.json();
       setLowStockItems(lowStockData);
     } catch (error) {
@@ -57,7 +57,7 @@ function AdminDashboard() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to permanently delete this item?")) {
       try {
-        const res = await fetch(`https://backend-xg71.onrender.com/inventory/${id}`, { method: "DELETE" });
+        const res = await fetch(`https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/${id}`, { method: "DELETE" });
         if (res.ok) {
           fetchData();
         }

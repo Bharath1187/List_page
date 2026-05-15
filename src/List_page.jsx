@@ -29,11 +29,11 @@ function List_page() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const itemsRes = await fetch(`https://backend-xg71.onrender.com/inventory/?search=${search}`);
+      const itemsRes = await fetch(`https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/?search=${search}`);
       const itemsData = await itemsRes.json();
       setItems(itemsData);
 
-      const summaryRes = await fetch("https://backend-xg71.onrender.com/inventory/summary");
+      const summaryRes = await fetch("https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/summary");
       const summaryData = await summaryRes.json();
       setSummary(summaryData);
     } catch (error) {
@@ -50,7 +50,7 @@ function List_page() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to permanently delete this item?")) {
       try {
-        const res = await fetch(`https://backend-xg71.onrender.com/inventory/${id}`, { method: "DELETE" });
+        const res = await fetch(`https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/${id}`, { method: "DELETE" });
         if (res.ok) {
           fetchData();
         }

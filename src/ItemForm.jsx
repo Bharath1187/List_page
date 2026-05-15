@@ -88,11 +88,11 @@ function ItemForm({ selectedItem, onClose, refresh }) {
 
     setLoading(true);
 
-    let baseUrl = "https://backend-xg71.onrender.com/inventory/";
+    let baseUrl = "https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/";
     let method = "POST";
 
     if (selectedItem) {
-      baseUrl = `https://backend-xg71.onrender.com/inventory/${selectedItem.id}`;
+      baseUrl = `https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/${selectedItem.id}`;
       method = "PUT";
     }
 

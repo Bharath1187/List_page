@@ -13,7 +13,7 @@ function HistoryDrawer({ item, onClose }) {
 
   const fetchHistory = async () => {
     try {
-      const res = await fetch(`https://backend-xg71.onrender.com/inventory/${item.id}/history`);
+      const res = await fetch(`https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/${item.id}/history`);
       if (!res.ok) {
         throw new Error("Failed to fetch history");
       }
