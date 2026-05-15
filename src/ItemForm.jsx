@@ -23,8 +23,8 @@ function ItemForm({ selectedItem, onClose, refresh }) {
     const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
 
     if (selectedItem) {
-      const formattedDate = selectedItem.last_restocked 
-        ? new Date(new Date(selectedItem.last_restocked).getTime() - new Date(selectedItem.last_restocked).getTimezoneOffset() * 60000).toISOString().slice(0, 16) 
+      const formattedDate = selectedItem.last_restocked
+        ? new Date(new Date(selectedItem.last_restocked).getTime() - new Date(selectedItem.last_restocked).getTimezoneOffset() * 60000).toISOString().slice(0, 16)
         : localISO;
       setForm({
         name: selectedItem.name || "",
@@ -88,7 +88,7 @@ function ItemForm({ selectedItem, onClose, refresh }) {
 
     setLoading(true);
 
-    let baseUrl = "https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/";
+    let baseUrl = "https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory";
     let method = "POST";
 
     if (selectedItem) {
@@ -105,14 +105,14 @@ function ItemForm({ selectedItem, onClose, refresh }) {
       quantity: parseInt(form.quantity, 10) || 0,
       low_stock_alert: parseInt(form.low_stock_alert, 10) || 10,
     });
-    
+
     // Add ISO string representation of selected date
     if (selectedItem && form.last_restocked) {
       params.append('last_restocked', new Date(form.last_restocked).toISOString());
     } else if (!selectedItem && form.created_at) {
       params.append('created_at', new Date(form.created_at).toISOString());
     }
-    
+
     const url = `${baseUrl}?${params.toString()}`;
 
     try {
@@ -139,7 +139,7 @@ function ItemForm({ selectedItem, onClose, refresh }) {
   return (
     <div className="item-form-overlay">
       <div className="item-form-modal">
-        
+
         {/* HEADER */}
         <div className="item-form-header">
           <h3 className="form-title">
@@ -157,8 +157,9 @@ function ItemForm({ selectedItem, onClose, refresh }) {
         <div className="item-form-grid">
 
           <div className="form-group">
-            <label className="form-label">Name</label>
+            <label className="form-label" htmlFor="item-name">Name</label>
             <input
+              id="item-name"
               name="name"
               value={form.name}
               onChange={handleChange}
@@ -168,8 +169,9 @@ function ItemForm({ selectedItem, onClose, refresh }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Description</label>
+            <label className="form-label" htmlFor="item-description">Description</label>
             <input
+              id="item-description"
               name="description"
               value={form.description}
               onChange={handleChange}
@@ -179,8 +181,9 @@ function ItemForm({ selectedItem, onClose, refresh }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Category</label>
+            <label className="form-label" htmlFor="item-category">Category</label>
             <input
+              id="item-category"
               name="category"
               value={form.category}
               onChange={handleChange}
@@ -190,8 +193,9 @@ function ItemForm({ selectedItem, onClose, refresh }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Price</label>
+            <label className="form-label" htmlFor="item-price">Price</label>
             <input
+              id="item-price"
               type="number"
               name="price"
               value={form.price}
@@ -202,8 +206,9 @@ function ItemForm({ selectedItem, onClose, refresh }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Unit Cost</label>
+            <label className="form-label" htmlFor="item-unit-cost">Unit Cost</label>
             <input
+              id="item-unit-cost"
               type="number"
               name="unit_cost"
               value={form.unit_cost}
@@ -214,8 +219,9 @@ function ItemForm({ selectedItem, onClose, refresh }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Quantity</label>
+            <label className="form-label" htmlFor="item-quantity">Quantity</label>
             <input
+              id="item-quantity"
               type="number"
               name="quantity"
               value={form.quantity}
@@ -226,8 +232,9 @@ function ItemForm({ selectedItem, onClose, refresh }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Low Stock Alert Level</label>
+            <label className="form-label" htmlFor="item-low-stock-alert">Low Stock Alert Level</label>
             <input
+              id="item-low-stock-alert"
               type="number"
               name="low_stock_alert"
               value={form.low_stock_alert}
@@ -240,8 +247,10 @@ function ItemForm({ selectedItem, onClose, refresh }) {
           {/* Show created date (read-only) in Edit mode */}
           {selectedItem && (
             <div className="form-group">
-              <label className="form-label">Created Date Time</label>
+              <label className="form-label" htmlFor="item-created-at">Created Date Time</label>
               <input
+                id="item-created-at"
+                name="created_at_display"
                 type="text"
                 readOnly
                 value={selectedItem.created_at ? new Date(selectedItem.created_at).toLocaleString() : "-"}
@@ -253,8 +262,9 @@ function ItemForm({ selectedItem, onClose, refresh }) {
 
           {selectedItem && (
             <div className="form-group">
-              <label className="form-label">Last Restocked Date</label>
+              <label className="form-label" htmlFor="item-last-restocked">Last Restocked Date</label>
               <input
+                id="item-last-restocked"
                 type="datetime-local"
                 name="last_restocked"
                 value={form.last_restocked}
@@ -276,8 +286,8 @@ function ItemForm({ selectedItem, onClose, refresh }) {
             {loading
               ? "Saving..."
               : selectedItem
-              ? "Update Item"
-              : "Add Item"}
+                ? "Update Item"
+                : "Add Item"}
           </button>
 
           <button className="secondary-btn" onClick={onClose}>

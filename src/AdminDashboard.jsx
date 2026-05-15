@@ -24,7 +24,7 @@ function AdminDashboard() {
   const [showRestock, setShowRestock] = useState(false);
   const [showStockOut, setShowStockOut] = useState(false);
   const [showSummaryReport, setShowSummaryReport] = useState(false);
-  
+
   const [selectedItem, setSelectedItem] = useState(null);
 
   const categories = ["All", ...new Set(items.map((item) => item.category))];
@@ -32,7 +32,7 @@ function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const itemsRes = await fetch(`https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/?search=${search}`);
+      const itemsRes = await fetch(`https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory?search=${search}`);
       const itemsData = await itemsRes.json();
       setItems(itemsData);
 
@@ -79,7 +79,7 @@ function AdminDashboard() {
     activeCategory === "All" ? true : item.category === activeCategory
   );
 
-  
+
 
   return (
     <div className="admin-dashboard">
@@ -90,7 +90,7 @@ function AdminDashboard() {
           <Link to="/inventory" className="nav-link">Inventory List</Link>
         </div>
         <div className="nav-right">
-             <Link to="/summary-report" className="nav-link">Summary Report</Link>
+          <Link to="/summary-report" className="nav-link">Summary Report</Link>
           <NotificationPanel lowStockItems={lowStockItems} />
         </div>
       </div>
@@ -118,6 +118,8 @@ function AdminDashboard() {
 
         <div className="search-row">
           <input
+            id="admin-search-input"
+            name="admin-search"
             type="text"
             className="search-input"
             placeholder="Search items by name..."
@@ -340,7 +342,7 @@ function AdminDashboard() {
                 </button>
                 <button
                   className="secondary-btn"
-                  
+
                 >
                   Close
                 </button>

@@ -29,7 +29,7 @@ function List_page() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const itemsRes = await fetch(`https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/?search=${search}`);
+      const itemsRes = await fetch(`https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory?search=${search}`);
       const itemsData = await itemsRes.json();
       setItems(itemsData);
 
@@ -76,7 +76,7 @@ function List_page() {
           <Link to="/" className="nav-link">Dashboard</Link>
         </div>
       </div>
-      
+
 
       <div className="stat-cards">
         <div className="stat-card">
@@ -95,6 +95,8 @@ function List_page() {
 
       <div className="search-row">
         <input
+          id="inventory-search-input"
+          name="inventory-search"
           type="text"
           className="search-input"
           placeholder="Search items by name..."

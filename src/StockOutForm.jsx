@@ -77,8 +77,9 @@ function StockOutForm({ item, onClose, refresh }) {
 
         <div className="item-form-grid">
           <div className="form-group">
-            <label className="form-label">Quantity Used</label>
+            <label className="form-label" htmlFor="stockout-quantity">Quantity Used</label>
             <input
+              id="stockout-quantity"
               type="number"
               name="quantityUsed"
               value={form.quantityUsed}
@@ -90,8 +91,9 @@ function StockOutForm({ item, onClose, refresh }) {
           </div>
 
           <div className="form-group" style={{ gridColumn: "span 2" }}>
-            <label className="form-label">Reason / Notes</label>
+            <label className="form-label" htmlFor="stockout-notes">Reason / Notes</label>
             <textarea
+              id="stockout-notes"
               name="notes"
               value={form.notes}
               onChange={handleChange}

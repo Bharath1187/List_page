@@ -90,8 +90,9 @@ function RestockForm({ item, onClose, refresh }) {
 
         <div className="item-form-grid">
           <div className="form-group">
-            <label className="form-label">Quantity Added</label>
+            <label className="form-label" htmlFor="restock-quantity">Quantity Added</label>
             <input
+              id="restock-quantity"
               type="number"
               name="quantityAdded"
               value={form.quantityAdded}
@@ -103,8 +104,9 @@ function RestockForm({ item, onClose, refresh }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Supplier</label>
+            <label className="form-label" htmlFor="restock-supplier">Supplier</label>
             <input
+              id="restock-supplier"
               name="supplier"
               value={form.supplier}
               onChange={handleChange}
@@ -114,8 +116,9 @@ function RestockForm({ item, onClose, refresh }) {
           </div>
 
           <div className="form-group">
-            <label className="form-label">Unit Cost</label>
+            <label className="form-label" htmlFor="restock-unit-cost">Unit Cost</label>
             <input
+              id="restock-unit-cost"
               type="number"
               step="0.01"
               name="unitCost"
@@ -128,8 +131,9 @@ function RestockForm({ item, onClose, refresh }) {
 
 
           <div className="form-group" style={{ gridColumn: "span 2" }}>
-            <label className="form-label">Notes</label>
+            <label className="form-label" htmlFor="restock-notes">Notes</label>
             <textarea
+              id="restock-notes"
               name="notes"
               value={form.notes}
               onChange={handleChange}
