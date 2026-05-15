@@ -4,7 +4,8 @@ import ItemForm from "./ItemForm";
 import HistoryDrawer from "./HistoryDrawer";
 import RestockForm from "./RestockForm";
 import StockOutForm from "./StockOutForm";
-import NotificationPanel from "./NotificationPanel"
+import NotificationPanel from "./NotificationPanel";
+import logo from "./RwashLogo.jpg";
 
 function AdminDashboard() {
   const [items, setItems] = useState([]);
@@ -86,9 +87,11 @@ function AdminDashboard() {
       {/* Top Navigation Bar */}
       <div className="top-nav">
         <div className="nav-left">
+          <img src={logo} alt="Rwash Logo" className="nav-logo" />
           <h1>Admin Dashboard</h1>
           <Link to="/inventory" className="nav-link">Inventory List</Link>
         </div>
+          
         <div className="nav-right">
           <Link to="/summary-report" className="nav-link">Summary Report</Link>
           <NotificationPanel lowStockItems={lowStockItems} />

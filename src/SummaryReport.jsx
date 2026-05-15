@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./SummaryReport.css";
+import logo from "./RwashLogo.jpg";
 
 function SummaryReport() {
   const [summary, setSummary] = useState({
@@ -58,7 +59,14 @@ function SummaryReport() {
 
   const handlePrint = () => {
     const printWindow = window.open("", "_blank");
-    printWindow.document.write(reportRef.current.innerHTML);
+    printWindow.document.write(`
+      <div class="print-report">
+        <div class="print-header" style="text-align: center; padding-bottom: 20px;">
+          <img src="${logo}" alt="Rwash Logo" style="height: 180px; margin-bottom: 15px;">
+        </div>
+        ${reportRef.current.innerHTML}
+      </div>
+    `);
     printWindow.document.head.innerHTML = `
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -228,6 +236,7 @@ function SummaryReport() {
     printWindow.document.close();
     setTimeout(() => {
       printWindow.print();
+      printWindow.close();
     }, 250);
   };
 
@@ -251,17 +260,29 @@ function SummaryReport() {
         className="ListHeading"
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          flexDirection: "column",
           alignItems: "center",
+          gap: "15px",
+          marginBottom: "30px"
         }}
       >
-        <Link to="/inventory" className="nav-link">
-          Back to Inventory
-        </Link>
-        <h2>Summary Report</h2>
-        <button className="print-button" onClick={handlePrint}>
-          Print Report
-        </button>
+        <img src={logo} alt="Rwash Logo" className="nav-logo" style={{ height: "180px" }} />
+        
+        <div style={{ 
+          display: "flex", 
+          justifyContent: "space-between", 
+          alignItems: "center", 
+          width: "100%",
+          padding: "0 20px"
+        }}>
+          <Link to="/inventory" className="nav-link">
+            Back to Inventory
+          </Link>
+          <h2 style={{ margin: 0 }}>Summary Report</h2>
+          <button className="print-button" onClick={handlePrint}>
+            Print Report
+          </button>
+        </div>
       </div>
 
       <div ref={reportRef} className="report-container">

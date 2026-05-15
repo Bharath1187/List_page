@@ -5,6 +5,7 @@ import HistoryDrawer from "./HistoryDrawer";
 import RestockForm from "./RestockForm";
 import StockOutForm from "./StockOutForm";
 import NotificationPanel from "./NotificationPanel";
+import logo from "./RwashLogo.jpg";
 
 function List_page() {
   const [items, setItems] = useState([]);
@@ -68,12 +69,28 @@ function List_page() {
 
   return (
     <div className="inventory-container">
-      <div className="ListHeading" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ width: "40px" }}></div>
-        <h2>Inventory List</h2>
-        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <NotificationPanel lowStockItems={lowStockItems} />
-          <Link to="/" className="nav-link">Dashboard</Link>
+      <div className="ListHeading" style={{ 
+        display: "flex", 
+        flexDirection: "column", 
+        alignItems: "center", 
+        gap: "15px",
+        marginBottom: "30px" 
+      }}>
+        <img src={logo} alt="Rwash Logo" className="nav-logo" style={{ height: "180px" }} />
+        
+        <div style={{ 
+          display: "flex", 
+          justifyContent: "space-between", 
+          alignItems: "center", 
+          width: "100%",
+          padding: "0 20px" 
+        }}>
+          <div style={{ width: "100px" }}></div> {/* Spacer for symmetry */}
+          <h2 style={{ margin: 0 }}>Inventory List</h2>
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <NotificationPanel lowStockItems={lowStockItems} />
+            <Link to="/" className="nav-link">Dashboard</Link>
+          </div>
         </div>
       </div>
 

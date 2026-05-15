@@ -412,7 +412,6 @@ h2 {
 
 /* Top Navigation */
 .top-nav {
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -432,10 +431,23 @@ h2 {
   gap: 20px;
 }
 
+.nav-logo {
+  height: 110px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  padding: 2px;
+  max-width: 190px;
+}
+
+.nav-logo:hover {
+  transform: scale(1.05);
+}
+
 .nav-left h1 {
   margin: 0;
   color: #da1a31;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
 }
 
 .nav-right {
@@ -617,7 +629,7 @@ h2 {
 /* Inventory Grid Layout */
 .inventory-container {
   padding: 20px;
-  margin-top: 80px; /* Account for fixed nav */
+  margin-top: 110px; /* Account for smaller fixed nav */
 }
 
 .inventory-grid {
