@@ -5,6 +5,8 @@ import HistoryDrawer from "./HistoryDrawer";
 import RestockForm from "./RestockForm";
 import StockOutForm from "./StockOutForm";
 import NotificationPanel from "./NotificationPanel";
+import AddProductModal from "./AddProductModal";
+import { useShortcuts } from "./useShortcuts";
 import logo from "./RwashLogo.jpg";
 
 function List_page() {
@@ -23,9 +25,23 @@ function List_page() {
   const [showHistory, setShowHistory] = useState(false);
   const [showRestock, setShowRestock] = useState(false);
   const [showStockOut, setShowStockOut] = useState(false);
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [scannedBarcode, setScannedBarcode] = useState("");
 
   const categories = ["All", ...new Set(items.map((item) => item.category))];
+
+  useShortcuts({
+    onAddNew: () => setShowAddProductModal(true),
+    onCloseModals: () => {
+      setShowAddProductModal(false);
+      setShowItemForm(false);
+      setShowHistory(false);
+      setShowRestock(false);
+      setShowStockOut(false);
+    },
+    searchInputId: "inventory-search-input"
+  });
 
   const fetchData = async () => {
     setLoading(true);
@@ -61,6 +77,16 @@ function List_page() {
     }
   };
 
+  const handleAddProductModeSelect = (mode, barcode) => {
+    if (mode === "scanner" && barcode) {
+      setScannedBarcode(barcode);
+    } else {
+      setScannedBarcode("");
+    }
+    setSelectedItem(null);
+    setShowItemForm(true);
+  };
+
   const filteredItems = items.filter((item) =>
     activeCategory === "All" ? true : item.category === activeCategory
   );
@@ -77,7 +103,7 @@ function List_page() {
         marginBottom: "30px" 
       }}>
         <img src={logo} alt="Rwash Logo" className="nav-logo" style={{ height: "180px" }} />
-        <p style={{width:"1060px", border:"2px solid #da1a31"}}></p>
+        <p style={{width:"1060px", border:"1px solid #da1a31"}}></p>
         <div style={{ 
           display: "flex", 
           justifyContent: "space-between", 
@@ -122,10 +148,7 @@ function List_page() {
         />
         <button
           className="add-item-btn"
-          onClick={() => {
-            setSelectedItem(null);
-            setShowItemForm(true);
-          }}
+          onClick={() => setShowAddProductModal(true)}
         >
           + Add New Item
         </button>
@@ -232,8 +255,19 @@ function List_page() {
       {showItemForm && (
         <ItemForm
           selectedItem={selectedItem}
-          onClose={() => setShowItemForm(false)}
+          scannedBarcode={scannedBarcode}
+          onClose={() => {
+            setShowItemForm(false);
+            setScannedBarcode("");
+          }}
           refresh={fetchData}
+        />
+      )}
+
+      {showAddProductModal && (
+        <AddProductModal
+          onSelectMode={handleAddProductModeSelect}
+          onClose={() => setShowAddProductModal(false)}
         />
       )}
 

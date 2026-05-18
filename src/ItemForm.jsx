@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 
-function ItemForm({ selectedItem, onClose, refresh }) {
+function ItemForm({ selectedItem, scannedBarcode, onClose, refresh }) {
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -11,7 +11,8 @@ function ItemForm({ selectedItem, onClose, refresh }) {
     quantity: "",
     low_stock_alert: 10,
     last_restocked: "",
-    created_at: ""
+    created_at: "",
+    barcode: ""
   });
 
   const [error, setError] = useState("");
@@ -35,7 +36,8 @@ function ItemForm({ selectedItem, onClose, refresh }) {
         quantity: selectedItem.quantity || "",
         low_stock_alert: selectedItem.low_stock_alert || 10,
         last_restocked: formattedDate,
-        created_at: selectedItem.created_at || ""
+        created_at: selectedItem.created_at || "",
+        barcode: selectedItem.barcode || ""
       });
     } else {
       setForm({
@@ -47,7 +49,8 @@ function ItemForm({ selectedItem, onClose, refresh }) {
         quantity: "",
         low_stock_alert: 10,
         last_restocked: "",
-        created_at: localISO
+        created_at: localISO,
+        barcode: scannedBarcode || ""
       });
     }
   }, [selectedItem]);
@@ -104,6 +107,7 @@ function ItemForm({ selectedItem, onClose, refresh }) {
       unit_cost: parseFloat(form.unit_cost) || 0,
       quantity: parseInt(form.quantity, 10) || 0,
       low_stock_alert: parseInt(form.low_stock_alert, 10) || 10,
+      barcode: form.barcode || "",
     });
 
     // Add ISO string representation of selected date
@@ -165,6 +169,19 @@ function ItemForm({ selectedItem, onClose, refresh }) {
               onChange={handleChange}
               className="form-input"
               placeholder="Enter item name"
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label" htmlFor="item-barcode">QR / Barcode</label>
+            <input
+              id="item-barcode"
+              name="barcode"
+              value={form.barcode}
+              onChange={handleChange}
+              className="form-input"
+              placeholder="QR/Barcode (optional)"
+              disabled={!!scannedBarcode}
             />
           </div>
 

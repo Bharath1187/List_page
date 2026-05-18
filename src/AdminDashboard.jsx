@@ -5,6 +5,8 @@ import HistoryDrawer from "./HistoryDrawer";
 import RestockForm from "./RestockForm";
 import StockOutForm from "./StockOutForm";
 import NotificationPanel from "./NotificationPanel";
+import AddProductModal from "./AddProductModal";
+import { useShortcuts } from "./useShortcuts";
 import logo from "./RwashLogo.jpg";
 
 function AdminDashboard() {
@@ -25,10 +27,25 @@ function AdminDashboard() {
   const [showRestock, setShowRestock] = useState(false);
   const [showStockOut, setShowStockOut] = useState(false);
   const [showSummaryReport, setShowSummaryReport] = useState(false);
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState(null);
+  const [scannedBarcode, setScannedBarcode] = useState("");
 
   const categories = ["All", ...new Set(items.map((item) => item.category))];
+
+  useShortcuts({
+    onAddNew: () => setShowAddProductModal(true),
+    onCloseModals: () => {
+      setShowAddProductModal(false);
+      setShowItemForm(false);
+      setShowHistory(false);
+      setShowRestock(false);
+      setShowStockOut(false);
+      setShowSummaryReport(false);
+    },
+    searchInputId: "admin-search-input"
+  });
 
   const fetchData = async () => {
     setLoading(true);
@@ -79,6 +96,16 @@ function AdminDashboard() {
   const filteredItems = items.filter((item) =>
     activeCategory === "All" ? true : item.category === activeCategory
   );
+
+  const handleAddProductModeSelect = (mode, barcode) => {
+    if (mode === "scanner" && barcode) {
+      setScannedBarcode(barcode);
+    } else {
+      setScannedBarcode("");
+    }
+    setSelectedItem(null);
+    setShowItemForm(true);
+  };
 
 
 
@@ -131,10 +158,7 @@ function AdminDashboard() {
           />
           <button
             className="add-item-btn"
-            onClick={() => {
-              setSelectedItem(null);
-              setShowItemForm(true);
-            }}
+            onClick={() => setShowAddProductModal(true)}
           >
             Add New Item
           </button>
@@ -235,8 +259,19 @@ function AdminDashboard() {
       {showItemForm && (
         <ItemForm
           selectedItem={selectedItem}
-          onClose={() => setShowItemForm(false)}
+          scannedBarcode={scannedBarcode}
+          onClose={() => {
+            setShowItemForm(false);
+            setScannedBarcode("");
+          }}
           refresh={fetchData}
+        />
+      )}
+
+      {showAddProductModal && (
+        <AddProductModal
+          onSelectMode={handleAddProductModeSelect}
+          onClose={() => setShowAddProductModal(false)}
         />
       )}
 
@@ -345,7 +380,7 @@ function AdminDashboard() {
                 </button>
                 <button
                   className="secondary-btn"
-
+                  onClick={() => setShowSummaryReport(false)}
                 >
                   Close
                 </button>

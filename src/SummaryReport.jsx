@@ -269,7 +269,7 @@ function SummaryReport() {
         }}
       >
         <img src={logo} alt="Rwash Logo" className="nav-logo" style={{ height: "180px" }} />
-        <div><p style={{width:"850px", border:"2px solid #da1a31"}}></p></div>
+        <div><p style={{width:"820px", border:"1px solid #da1a31"}}></p></div>
         
         <div style={{ 
           display: "flex", 
