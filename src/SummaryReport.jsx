@@ -264,26 +264,11 @@ function SummaryReport() {
   return (
     <div className="inventory-container">
       
-      <div
-        className="ListHeading"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "15px",
-          marginBottom: "30px"
-        }}
-      >
-        <img src={logo} alt="Rwash Logo" className="nav-logo" style={{ height: "180px" }} />
-        <div><p style={{width:"820px", border:"1px solid #da1a31"}}></p></div>
+      <div className="list-heading-container">
+        <img src={logo} alt="Rwash Logo" className="list-heading-logo" />
+        <hr className="list-heading-divider" />
         
-        <div style={{ 
-          display: "flex", 
-          justifyContent: "space-between", 
-          alignItems: "center", 
-          width: "100%",
-          padding: "0 20px"
-        }}>
+        <div className="list-heading-content">
           <Link to="/admin-dashboard" className="print-button" title="Back to Dashboard" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '20px', height: '20px' }}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />

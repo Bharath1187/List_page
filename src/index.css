@@ -382,6 +382,70 @@ h2 {
   text-align: center;
 }
 
+/* New responsive classes for List Page & Summary headers */
+.list-heading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.list-heading-logo {
+  height: 180px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.list-heading-divider {
+  width: 100%;
+  max-width: 1060px;
+  border: none;
+  border-top: 2px solid #da1a31;
+  margin: 0;
+}
+
+.list-heading-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.list-heading-spacer {
+  width: 100px;
+}
+
+.list-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .list-heading-logo {
+    height: 120px;
+  }
+  .list-heading-content {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  .list-heading-spacer {
+    display: none; /* Remove spacer on mobile to center title properly */
+  }
+  .list-heading-actions {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .list-heading-content h2 {
+    margin-bottom: 10px;
+  }
+}
+
 /* Delete and general button styles */
 .btn {
   padding: 8px 16px;
@@ -454,6 +518,32 @@ h2 {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Responsive top-nav for mobile */
+@media (max-width: 768px) {
+  .top-nav {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .nav-left {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .nav-left h1 {
+    font-size: 1.5rem;
+  }
+  
+  .nav-right {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .summary-report-btn {

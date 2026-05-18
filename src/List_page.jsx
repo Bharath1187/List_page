@@ -104,25 +104,13 @@ function List_page() {
 
   return (
     <div className="inventory-container">
-      <div className="ListHeading" style={{ 
-        display: "flex", 
-        flexDirection: "column", 
-        alignItems: "center", 
-        gap: "15px",
-        marginBottom: "30px" 
-      }}>
-        <img src={logo} alt="Rwash Logo" className="nav-logo" style={{ height: "180px" }} />
-        <p style={{width:"1060px", border:"1px solid #da1a31"}}></p>
-        <div style={{ 
-          display: "flex", 
-          justifyContent: "space-between", 
-          alignItems: "center", 
-          width: "100%",
-          padding: "0 20px" 
-        }}>
-          <div style={{ width: "100px" }}></div> {/* Spacer for symmetry */}
+      <div className="list-heading-container">
+        <img src={logo} alt="Rwash Logo" className="list-heading-logo" />
+        <hr className="list-heading-divider" />
+        <div className="list-heading-content">
+          <div className="list-heading-spacer"></div>
           <h2 style={{ margin: 0 }}>Inventory List</h2>
-          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <div className="list-heading-actions">
             <NotificationPanel lowStockItems={lowStockItems} />
             <Link to="/" className="nav-link">Dashboard</Link>
           </div>
