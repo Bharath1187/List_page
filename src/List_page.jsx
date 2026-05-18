@@ -26,15 +26,24 @@ function List_page() {
   const [showRestock, setShowRestock] = useState(false);
   const [showStockOut, setShowStockOut] = useState(false);
   const [showAddProductModal, setShowAddProductModal] = useState(false);
+  const [startScanner, setStartScanner] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [scannedBarcode, setScannedBarcode] = useState("");
 
   const categories = ["All", ...new Set(items.map((item) => item.category))];
 
   useShortcuts({
-    onAddNew: () => setShowAddProductModal(true),
+    onAddNew: () => {
+      setStartScanner(false);
+      setShowAddProductModal(true);
+    },
+    onScan: () => {
+      setStartScanner(true);
+      setShowAddProductModal(true);
+    },
     onCloseModals: () => {
       setShowAddProductModal(false);
+      setStartScanner(false);
       setShowItemForm(false);
       setShowHistory(false);
       setShowRestock(false);
@@ -267,7 +276,11 @@ function List_page() {
       {showAddProductModal && (
         <AddProductModal
           onSelectMode={handleAddProductModeSelect}
-          onClose={() => setShowAddProductModal(false)}
+          onClose={() => {
+            setShowAddProductModal(false);
+            setStartScanner(false);
+          }}
+          startInScanner={startScanner}
         />
       )}
 

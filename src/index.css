@@ -373,7 +373,7 @@ h2 {
   }
 }
 
-.ListHeading{
+.ListHeading {
   color: #da1a31;
   background-color: transparent;
   width: 100%;
@@ -476,38 +476,60 @@ h2 {
   background: #b81428;
 }
 
-.notification-bell {
+.notification {
   position: relative;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
 }
 
-.notification-bell:hover {
-  background-color: #f8f9fa;
-}
-
+/* Bell Icon */
 .bell-icon {
-  font-size: 24px;
-  color: #0a0a0a;
+  width: 70%;
+  height: 130%;
+  fill: #da1a31;
+  /* your UI red */
+  transition: 0.3s;
 }
 
-.notification-badge {
+.notification:hover .bell-icon {
+  fill: #da1a31;
+}
+
+/* Badge */
+.badge {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  background: #dc3545;
+  top: -5px;
+  right: -5px;
+  background: #da1a31;
   color: white;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
   font-size: 12px;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid white;
+  padding: 4px 7px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px white;
+}
+
+@keyframes ring {
+  0% {
+    transform: rotate(0);
+  }
+
+  25% {
+    transform: rotate(12deg);
+  }
+
+  50% {
+    transform: rotate(-12deg);
+  }
+
+  75% {
+    transform: rotate(6deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
 }
 
 /* Notification Dropdown */
@@ -603,7 +625,8 @@ h2 {
 
 .action-btn {
   padding: 8px 20px;
-  border-radius: 6px; /* Rounded-rect instead of pill */
+  border-radius: 6px;
+  /* Rounded-rect instead of pill */
   font-size: 14px;
   font-weight: 700;
   border: none;
@@ -611,25 +634,42 @@ h2 {
   color: white;
   white-space: nowrap;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .action-btn:hover {
   transform: translateY(-1px);
   filter: brightness(1.1);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.edit-btn { background-color: #ffffff; }
-.restock-btn { background-color: #ffffff; }
-.stock-out-btn { background-color: #ffffff; color: rgb(255, 255, 255); } /* Yellow with black text */
-.history-btn { background-color: #ffffff; }
-.delete-btn { background-color: #fdfdfd; }
+.edit-btn {
+  background-color: #ffffff;
+}
+
+.restock-btn {
+  background-color: #ffffff;
+}
+
+.stock-out-btn {
+  background-color: #ffffff;
+  color: rgb(255, 255, 255);
+}
+
+/* Yellow with black text */
+.history-btn {
+  background-color: #ffffff;
+}
+
+.delete-btn {
+  background-color: #fdfdfd;
+}
 
 /* Inventory Grid Layout */
 .inventory-container {
   padding: 20px;
-  margin-top: 110px; /* Account for smaller fixed nav */
+  margin-top: 110px;
+  /* Account for smaller fixed nav */
 }
 
 .inventory-grid {
@@ -1041,7 +1081,8 @@ h2 {
   transform: translateY(-1px);
 }
 
-.loading, .no-notifications {
+.loading,
+.no-notifications {
   padding: 40px;
   text-align: center;
   color: #666;
@@ -1261,7 +1302,8 @@ h2 {
   cursor: pointer;
   position: relative;
   padding: 8px;
-  color: #f1c40f; /* Gold color from image */
+  color: #f1c40f;
+  /* Gold color from image */
   transition: transform 0.2s ease;
 }
 
@@ -1354,7 +1396,8 @@ h2 {
 }
 
 .dismiss-all-btn {
-  background: #8e6e11; /* Dark gold/brown from image */
+  background: #8e6e11;
+  /* Dark gold/brown from image */
   color: white;
   border: none;
   padding: 6px 16px;
@@ -1400,7 +1443,7 @@ h2 {
 }
 
 
-.Actions{
+.Actions {
   text-align: center;
 }
 
@@ -1408,7 +1451,8 @@ h2 {
 @media (max-width: 600px) {
   .notification-panel {
     width: 94vw;
-    position: fixed; /* Fix to screen for better centering on mobile */
+    position: fixed;
+    /* Fix to screen for better centering on mobile */
     top: 80px;
     left: 3vw;
     right: 3vw;
@@ -1439,9 +1483,9 @@ h2 {
     gap: 15px;
     padding: 20px 10px;
   }
-  
-  .ListHeading > div:first-child {
-    display: none !important; 
+
+  .ListHeading>div:first-child {
+    display: none !important;
   }
 
   .stat-cards {
@@ -1459,7 +1503,7 @@ h2 {
     min-width: 350px;
     text-align: center;
   }
-  
+
   .action-buttons-wrapper {
     justify-content: center;
   }
@@ -1754,6 +1798,7 @@ h2 {
 
 /* Print Styles */
 @media print {
+
   /* Hide overlay and non-report elements */
   .item-form-overlay {
     background: transparent;
@@ -1878,7 +1923,7 @@ h2 {
   }
 }
 
-.print-header{
+.print-header {
   display: flex;
   align-items: center;
   gap: 20px;

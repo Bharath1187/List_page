@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import "./AddProductModal.css";
 
-function AddProductModal({ onSelectMode, onClose }) {
-  const [scannerActive, setScannerActive] = useState(false);
+function AddProductModal({ onSelectMode, onClose, startInScanner = false }) {
+  const [scannerActive, setScannerActive] = useState(startInScanner);
   const [barcodeInput, setBarcodeInput] = useState("");
   const [isScanning, setIsScanning] = useState(false);
   const [scanError, setScanError] = useState("");

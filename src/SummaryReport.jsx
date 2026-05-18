@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./SummaryReport.css";
+import { useShortcuts } from "./useShortcuts";
 import logo from "./RwashLogo.jpg";
 
 function SummaryReport() {
@@ -13,6 +14,11 @@ function SummaryReport() {
   const [categoryBreakdown, setCategoryBreakdown] = useState({});
   const [loading, setLoading] = useState(true);
   const reportRef = useRef(null);
+
+  useShortcuts({
+    onPrint: () => handlePrint(),
+    // We don't need onAddNew or onScan here as there's no modal on this page
+  });
 
   useEffect(() => {
     fetchReportData();
@@ -278,8 +284,10 @@ function SummaryReport() {
           width: "100%",
           padding: "0 20px"
         }}>
-          <Link to="/inventory" className="nav-link">
-            Back to Inventory
+          <Link to="/admin-dashboard" className="print-button" title="Back to Dashboard" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '20px', height: '20px' }}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
           </Link>
           <h2 style={{ margin: 0 }}>Summary Report</h2>
           <button className="print-button" onClick={handlePrint}>

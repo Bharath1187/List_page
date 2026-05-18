@@ -40,10 +40,13 @@ function NotificationPanel({ lowStockItems }) {
 
   return (
     <div className="notification-wrapper" ref={panelRef}>
-      <button className="notification-bell" onClick={togglePanel}>
-        🔔
+      <button className="notification" onClick={togglePanel} style={{ background: 'none', border: 'none', padding: 0 }}>
+        <svg className="bell-icon" viewBox="0 0 24 24">
+          <path d="M12 2C10 2 8 4 8 6V7C5 8 4 10 4 13V17L2 19V20H22V19L20 17V13C20 10 19 8 16 7V6C16 4 14 2 12 2Z"/>
+          <circle cx="12" cy="22" r="2"/>
+        </svg>
         {visibleItems.length > 0 && (
-          <span className="notification-count">{visibleItems.length}</span>
+          <span className="badge">{visibleItems.length}</span>
         )}
       </button>
 
