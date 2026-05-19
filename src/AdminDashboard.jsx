@@ -126,7 +126,7 @@ function AdminDashboard() {
           <h1>Admin Dashboard</h1>
           <Link to="/inventory" className="nav-link">Inventory List</Link>
         </div>
-          
+
         <div className="nav-right">
           <Link to="/summary-report" className="nav-link">Summary Report</Link>
           <NotificationPanel lowStockItems={lowStockItems} />
