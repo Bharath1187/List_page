@@ -26,6 +26,9 @@ function AddProductModal({ onSelectMode, onClose, startInScanner = false }) {
         { 
           fps: 10, 
           qrbox: { width: 300, height: 300 },
+          experimentalFeatures: {
+            useBarCodeDetectorIfSupported: true
+          },
           formatsToSupport: [
             Html5QrcodeSupportedFormats.QR_CODE,
             Html5QrcodeSupportedFormats.CODE_128,
