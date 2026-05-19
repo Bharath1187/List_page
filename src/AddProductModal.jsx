@@ -112,6 +112,18 @@ function AddProductModal({ onSelectMode, onClose, startInScanner = false }) {
                   Point camera at barcode/QR code
                 </p>
                 {scanError && <p className="scanner-error">{scanError}</p>}
+                
+                <button
+                  className="stop-scanning-btn"
+                  onClick={() => {
+                    if (html5QrcodeRef.current) {
+                      html5QrcodeRef.current.clear();
+                    }
+                    setIsScanning(false);
+                  }}
+                >
+                  Stop Scanning
+                </button>
               </>
             ) : (
               <>
@@ -126,8 +138,38 @@ function AddProductModal({ onSelectMode, onClose, startInScanner = false }) {
                 </div>
 
                 <p className="scanner-instruction">
-                  Scan barcode or QR code with your webcam
+                  Use physical scanner or start webcam
                 </p>
+
+                <form onSubmit={handleBarcodeSubmit} className="barcode-form">
+                  <input
+                    type="text"
+                    className="barcode-input"
+                    placeholder="Scan with physical device..."
+                    value={barcodeInput}
+                    onChange={(e) => setBarcodeInput(e.target.value)}
+                    ref={barcodeInputRef}
+                  />
+                  <div style={{display: 'flex', gap: '10px', marginTop: '10px'}}>
+                    <button type="submit" className="submit-barcode-btn" disabled={!barcodeInput.trim()}>
+                      Submit Code
+                    </button>
+                    {barcodeInput && (
+                      <button
+                        type="button"
+                        className="rescan-btn"
+                        style={{marginBottom: 0}}
+                        onClick={() => setBarcodeInput("")}
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
+                </form>
+
+                <div style={{margin: '20px 0', textAlign: 'center'}}>
+                  <span style={{color: "#888", fontSize: "13px"}}>OR</span>
+                </div>
 
                 <button
                   className="start-scanning-btn"
@@ -138,51 +180,10 @@ function AddProductModal({ onSelectMode, onClose, startInScanner = false }) {
               </>
             )}
 
-            {isScanning && (
-              <button
-                className="stop-scanning-btn"
-                onClick={() => {
-                  if (html5QrcodeRef.current) {
-                    html5QrcodeRef.current.clear();
-                  }
-                  setIsScanning(false);
-                }}
-              >
-                Stop Scanning
-              </button>
-            )}
-
-            {barcodeInput && (
-              <form onSubmit={handleBarcodeSubmit} className="barcode-form">
-                <div className="scanned-result">
-                  <label>Scanned Code:</label>
-                  <input
-                    type="text"
-                    className="barcode-input"
-                    value={barcodeInput}
-                    onChange={(e) => setBarcodeInput(e.target.value)}
-                    disabled
-                  />
-                </div>
-                <button type="submit" className="submit-barcode-btn">
-                  Continue with Scanned Code
-                </button>
-                <button
-                  type="button"
-                  className="rescan-btn"
-                  onClick={() => {
-                    setBarcodeInput("");
-                    setIsScanning(true);
-                  }}
-                >
-                  Scan Again
-                </button>
-              </form>
-            )}
-
             <button
               className="back-to-options-btn"
               onClick={handleBackToOptions}
+              style={{marginTop: '16px'}}
             >
               ← Back to Options
             </button>
