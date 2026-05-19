@@ -58,7 +58,7 @@ function RestockForm({ item, onClose, refresh }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/inventory/${item.id}/restock?${params.toString()}`, {
+      const res = await fetch(`https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/${item.id}/restock?${params.toString()}`, {
         method: "POST"
       });
 
