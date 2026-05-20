@@ -11,6 +11,7 @@ function SummaryReport() {
     total_inventory_value: 0,
   });
   const [items, setItems] = useState([]);
+  const [history, setHistory] = useState([]);
   const [categoryBreakdown, setCategoryBreakdown] = useState({});
   const [loading, setLoading] = useState(true);
   const reportRef = useRef(null);
@@ -36,6 +37,11 @@ function SummaryReport() {
       const itemsRes = await fetch("https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/");
       const itemsData = await itemsRes.json();
       setItems(itemsData);
+
+      // Fetch global history
+      const historyRes = await fetch("https://nlsggvdz4dj5mwxtfakcees27m0isgkf.lambda-url.ap-southeast-2.on.aws/inventory/history/all");
+      const historyData = await historyRes.json();
+      setHistory(historyData);
 
       // Calculate category breakdown
       const breakdown = {};
@@ -206,8 +212,35 @@ function SummaryReport() {
           font-size: 13px;
         }
         
-        .low-stock-table tbody tr:nth-child(even) {
+        .low-stock-table tbody tr:nth-child(even),
+        .history-table tbody tr:nth-child(even) {
           background-color: #ffe6e6;
+        }
+
+        .history-table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 30px;
+          page-break-inside: avoid;
+        }
+        
+        .history-table th {
+          background-color: #6c757d;
+          color: white;
+          padding: 12px;
+          text-align: left;
+          font-weight: 600;
+          font-size: 13px;
+        }
+        
+        .history-table td {
+          padding: 12px;
+          border-bottom: 1px solid #ddd;
+          font-size: 13px;
+        }
+
+        .history-table tbody tr:nth-child(even) {
+          background-color: #f8f9fa;
         }
         
         .footer {
@@ -375,6 +408,48 @@ function SummaryReport() {
           </table>
         ) : (
           <div className="no-data">All items are well stocked!</div>
+        )}
+
+        {/* Event History */}
+        <h4 className="section-title">Recent Event History</h4>
+        {history.length > 0 ? (
+          <table className="history-table" style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '30px' }}>
+            <thead>
+              <tr style={{ backgroundColor: '#6c757d', color: 'white' }}>
+                <th style={{ padding: '12px', textAlign: 'left' }}>Date & Time</th>
+                <th style={{ padding: '12px', textAlign: 'left' }}>Item</th>
+                <th style={{ padding: '12px', textAlign: 'left' }}>Event</th>
+                <th style={{ padding: '12px', textAlign: 'left' }}>Qty</th>
+                <th style={{ padding: '12px', textAlign: 'left' }}>Logged By</th>
+                <th style={{ padding: '12px', textAlign: 'left' }}>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {history.map((event, index) => (
+                <tr key={event.id} style={{ backgroundColor: index % 2 === 0 ? 'white' : '#f8f9fa', borderBottom: '1px solid #ddd' }}>
+                  <td style={{ padding: '12px' }}>{new Date(event.timestamp).toLocaleString("en-US", {
+                    year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"
+                  })}</td>
+                  <td style={{ padding: '12px' }}>{event.item_name}</td>
+                  <td style={{ padding: '12px' }}>
+                    <span style={{ 
+                      color: event.event_type === 'stock_in' ? '#2e7d32' : '#c62828',
+                      fontWeight: 'bold',
+                      textTransform: 'uppercase',
+                      fontSize: '0.85em'
+                    }}>
+                      {event.event_type.replace('_', ' ')}
+                    </span>
+                  </td>
+                  <td style={{ padding: '12px' }}>{event.quantity}</td>
+                  <td style={{ padding: '12px' }}>{event.logged_by || '-'}</td>
+                  <td style={{ padding: '12px' }}>{event.notes || '-'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="no-data">No recent event history found.</div>
         )}
 
         {/* Footer */}
